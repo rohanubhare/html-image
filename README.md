@@ -1,5 +1,5 @@
-# HTML Image web
+# Technical Task: HTML Image in Flutter web 
 
-Visit for Web app Demo: -[https://rohanubhare.github.io/](https://rohanubhare.github.io/)
+Visit for Web app Demo: [https://rohanubhare.github.io/](https://rohanubhare.github.io/)
 
 
