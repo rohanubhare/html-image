@@ -46,14 +46,14 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Scaffold(
-          appBar: AppBar(
-            title: const Text('Flutter Web Image'),
-          ),
-          body: Column(
+    return Scaffold(
+      body: Stack(
+        children: [
+          Column(
             children: [
+              AppBar(
+                title: const Text('Flutter Web Image'),
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(32, 16, 32, 16),
@@ -116,72 +116,72 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          floatingActionButton: PopupMenuButton<int>(
-            itemBuilder: (context) => [
-              PopupMenuItem(
-                value: 0,
-                height: 36,
-                child: Row(
-                  children: [
-                    const Text(
-                      'Enter Fullscreen',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
-                ),
+          if (_showOverlayBg)
+            GestureDetector(
+              onTap: () => setState(() => _showOverlayBg = false),
+              child: Container(
+                color: Colors.black54,
+                width: MediaQuery.of(context).size.width,
+                height: double.infinity,
               ),
-              PopupMenuItem(
-                value: 1,
-                height: 36,
-                child: Row(
-                  children: [
-                    const Text(
-                      'Exit Fullscreen',
-                      style: TextStyle(fontSize: 18),
-                    ),
-                  ],
+            ),
+        ],
+      ),
+      floatingActionButton: PopupMenuButton<int>(
+        itemBuilder: (context) => [
+          PopupMenuItem(
+            value: 0,
+            height: 36,
+            child: Row(
+              children: [
+                const Text(
+                  'Enter Fullscreen',
+                  style: TextStyle(fontSize: 18),
                 ),
-              ),
-            ],
-            offset: Offset(0, -96),
-            color: Colors.white,
-            elevation: 2,
-            position: PopupMenuPosition.over,
-            tooltip: '',
-            onOpened: () {
-              // Show overlay background for popup menu
-              setState(() => _showOverlayBg = true);
-            },
-            onCanceled: () {
-              // Handle closing of overlay
-              setState(() => _showOverlayBg = false);
-            },
-            onSelected: (value) {
-              // Handle enter or exit of fullscreen based on selected item and current state.
-              if (value == 0 && !web.document.fullscreen) {
-                web.document.documentElement?.requestFullscreen();
-              }
-              if (value == 1 && web.document.fullscreen) {
-                web.document.exitFullscreen();
-              }
-              setState(() => _showOverlayBg = false);
-            },
-            child: FloatingActionButton(
-              onPressed: null,
-              child: const Icon(Icons.add),
+              ],
             ),
           ),
+          PopupMenuItem(
+            value: 1,
+            height: 36,
+            child: Row(
+              children: [
+                const Text(
+                  'Exit Fullscreen',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ],
+            ),
+          ),
+        ],
+        offset: Offset(0, -96),
+        color: Colors.white,
+        elevation: 2,
+        position: PopupMenuPosition.over,
+        tooltip: '',
+        onOpened: () {
+          // Show overlay background for popup menu
+          setState(() => _showOverlayBg = true);
+        },
+        onCanceled: () {
+          // Handle closing of overlay
+          setState(() => _showOverlayBg = false);
+        },
+        onSelected: (value) {
+          // Handle enter or exit of fullscreen based on selected item and current state.
+          if (value == 0 && !web.document.fullscreen) {
+            web.document.documentElement?.requestFullscreen();
+          }
+          if (value == 1 && web.document.fullscreen) {
+            web.document.exitFullscreen();
+          }
+          setState(() => _showOverlayBg = false);
+        },
+        child: FloatingActionButton(
+          onPressed: null,
+          child: const Icon(Icons.add),
         ),
-        if (_showOverlayBg)
-          GestureDetector(
-            onTap: () => setState(() => _showOverlayBg = false),
-            child: Container(
-              color: Colors.black54,
-              width: MediaQuery.of(context).size.width,
-              height: double.infinity,
-            ),
-          ),
-      ],
+      ),
     );
   }
 }
